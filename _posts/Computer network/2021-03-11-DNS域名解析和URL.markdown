@@ -1,0 +1,44 @@
+---
+layout:     post
+title:      "DNS and URL"
+subtitle:   "DNS域名解析和URL解析"
+date:       2021-03-11
+author:     "Audrey"
+header-img: "img/post-http-dns-url-2021.jpg"
+catalog: true
+hidden: true
+tags:
+    - Web前端
+    - HTTP
+---
+### DNS域名解析过程
+
+1. 检查浏览器缓存中是否缓存过该域名对应的IP地址
+2. 如果在浏览器缓存中没有找到IP，那么将继续查找本机系统是否缓存过IP
+
+3. 向本地域名解析服务系统发起域名解析的请求
+
+4. 向根域名解析服务器发起域名解析请求
+
+5. 根域名服务器返回gTLD域名解析服务器地址
+
+6. 向gTLD服务器发起解析请求
+7. gTLD服务器接收请求并返回Name Server服务器
+
+8. Name Server服务器返回IP地址给本地服务器
+
+9. 本地域名服务器缓存解析结果
+
+10. 返回解析结果给用户
+
+### URL到服务器过程
+
+1. 浏览器向DNS服务器请求解析URL中的IP；
+2. 根据解析得到的IP与默认端口，浏览器和服务器建立TCP连接；
+
+3. 浏览器向服务器发送HTTP请求，请求作为TCP三次握手的第三个报文向服务器发送；
+
+4. 服务器对浏览器的请求作出响应，并把对应的HTML文本发送给浏览器；
+
+5. 浏览器将HTML文本显示。
+

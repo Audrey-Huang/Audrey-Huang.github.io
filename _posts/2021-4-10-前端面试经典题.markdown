@@ -1,0 +1,379 @@
+---
+layout:     post
+title:      "Classic Interview Questions"
+subtitle:   "前端面试经典题"
+date:       2021-04-10
+author:     "Audrey"
+header-img: "img/post-js-coding-2021.jpg"
+catalog: true
+tags:
+    - Web前端
+    - JS
+    - Coding
+---
+
+### 代码反复练
+
+#### 1.深拷贝
+
+```js
+let obj={
+    name:"Audrey",
+    age:23,
+    main:{
+        a:1,
+        b:2
+    },
+    fn:function(){       
+    },
+    friends:[1,2,3,[22,33]]
+}
+function deepclone(obj,map=new Map()){
+    if(typeof obj!=="object"||obj===null){
+        return obj;
+    }
+    if(map.get(obj)){
+        return map.get(obj);
+    }
+    var ansArr=obj instanceof Array?[]:{};
+    map.set(obj,ansArr);
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            ansArr[key]=deepclone(obj[key],map);
+        }
+    }
+    return ansArr;
+}
+```
+
+#### 2.浅拷贝
+
+```js
+let obj={
+    name:"Audrey",
+    age:23,
+    main:{
+        a:1,
+        b:2
+    },
+    fn:function(){       
+    },
+    friends:[1,2,3,[22,33]]
+}
+function shallowcopy(obj){
+    if(typeof obj!=="object"||obj===null){
+        return obj;
+    }
+    var ansArr=obj instanceof Array?[]:{};
+    for(var key in obj){
+        if(obj.hasOwnProperty(key)){
+            ansArr[key]=obj[key];
+        }
+    }
+    return ansArr;
+}
+```
+
+#### 3.数组去重
+
+```js
+var obj=[1,2,3,4,5,3,2,4];
+//借助indexof实现
+function fn1(obj){
+    var ansArr=[];
+    for(var i=0;i<obj.length;i++){
+        if(!asnArr.indexOf(obj[i])){
+            ansArr.push(obj[i]);
+        }
+    }
+    return ansArr;
+}
+//借助reduce实现
+function fn2(obj){
+    var temp={};
+    var ansArr=[];
+    ansArr=obj.reduce((pre,item)=>{
+        if(!temp[item]){
+            temp[item]=true;
+            pre.push(item);
+        }
+        return pre;
+    },[]);
+    return ansArr;
+}
+//借助filter实现
+function fn3(obj){
+    var temp={};
+    var ansArr=[];
+    ansArr=obj.filter(item=>{
+        if(!temp[item]){
+            temp[item]=true;
+            return true;
+        }
+        else return false;
+    })
+    return ansArr;   
+}
+//使用set实现
+function fn4(obj){
+    var ansArr=[];
+    ansArr=Array.from(new Set(obj));
+}
+```
+
+#### 4.数组扁平化
+
+```js
+var obj=[1,2,3,4,[1,2,3,4]];
+//自定义函数
+function flat(obj){
+    if(typeof obj!=="object"||obj===null){
+        return obj;
+    }
+    var ansArr=[];
+    for(var i=0;i<obj.length;i++){
+        if(obj[i] instanceof Array){
+            ansArr=ansArr.concat(flat(obj[i]));
+        }
+        else ansArr.push(obj[i]);
+    }
+    return ansArr;
+}
+//使用es6提供的函数
+var ansArr=obj.flat(Infinity);
+```
+
+#### 5.函数节流
+
+```js
+function throttle(fn,delay){
+    var timer;
+    return function(){
+        var _this=this;
+        var args=arguments;
+        if(timer){
+            return;
+        }
+       timer=setTimeout(function(){
+           fn.apply(_this,args);
+           clearTimeout(timer);
+       },delay)
+    }
+}
+```
+
+#### 6.函数防抖
+
+```js
+function debounce(fn,delay){
+    var timer;
+    return function(){
+        var _this=this;
+        var args=arguments;
+        if(timer){
+            clearTimeout(timer);
+        }
+        timer=setTimeout(function(){
+            fn.apply(_this,args);
+        },delay);
+    }
+}
+```
+
+#### 7.手写call
+
+```js
+Function.prototype.mycall=function(context,...args){
+    var context=context||window;
+    context.fn=this;
+    var results=context.fn(...args);
+    delete context.fn;
+    return results;
+}
+```
+
+#### 8.手写apply
+
+```js
+Function.prototype.myapply=function(context,args){
+    var context=context||window;
+    context.fn=this;
+    var results=context.fn(...args);
+    delete context.fn;
+    return results;
+}
+```
+
+#### 9.手写bind
+
+```js
+Function.prototype.mybind=function(context){
+    //调用bind的不是函数，需要抛出异常
+    if(typeof this!=="function"){
+        throw TypeError("error");
+    }
+    //this指向调用者
+    var self=this;
+    //第一个参数是指定的this，截取第一个之后的参数
+    var args=Array.prototype.slice.call(arguments,1);
+    return function(){
+        var innerargs=Array.prototype.slice.call(arguments);
+        return self.apply(context,args.concat(innerargs));
+    }
+}
+```
+
+#### 10.函数柯里化
+
+```js
+function add(x,y,z){
+    return x+y+z;
+}
+function curry(fn,...args1){
+    if(args1.length>=fn.length){
+        return fn(...args1);
+    }
+    return function(...args2){
+        return curry(fn,...args1,...args2);
+    }
+}
+```
+
+#### 11.手写Promise
+
+```js
+class Promise{
+    constructor(executor){
+        this.status="pending";
+        this.value="";
+        this.error="";
+        this.fulfilled=[];
+        this.rejected=[];
+        var resolve=(value)=>{
+            if(this.status==="pending"){
+                this.status="fulfilled";
+                this.value=value;
+                this.fulfilled.forEach(fn=>fn(value));
+            }
+        }
+        var reject=(error)=>{
+            if(this.status==="pending"){
+                this.status="rejected";
+                this.error=error;
+                this.rejected.forEach(fn=>fn(error));
+            }
+        }
+        try{
+            exectuor(resolve,reject);
+        }catch(e){
+            reject(e);
+        }
+    }
+    then(fulfilled,rejected){
+        if(this.status==="fulfilled"){
+            fulfilled(value);
+        }
+        if(this.status==="rejected"){
+            rejected(error);
+        }
+        if(this.status==="pending"){
+            this.fulfilled.push(fulfilled);
+            this.rejected.push(rejected);
+        }
+    }
+}
+```
+
+#### 11.手写Promise.all
+
+```js
+function _all(PromiseArrs){
+    return new Promise((resolve,reject)=>{
+        if(!Array.isArray(PromiseArrs)){
+            reject("error");
+        }
+        let count=0;
+        let arr=new Array(PromiseArrs.length);
+        for(let i=0;i<PromiseArrs.length;i++){
+            Promise.resolve(PromiseArrs[i]).then(value=>{
+                arr[i]=value;
+                count++;
+                if(count==PromiseArrs.length){
+                    return resolve(arr);
+                }
+            },error=>{
+                return reject(error);
+            })
+        }
+    })
+}
+```
+
+#### 12.手写Promise.race
+
+```js
+function _race(PromiseArrs){
+    return new Promise((resolve,reject)=>{
+        if(!Array.isArray(PromiseArrs)){
+            reject("error");
+        }
+        for(var i=0;i<PromiseArrs.length;i++){
+            Promise.resolve(PromiseArrs[i]).then(value=>{
+                return resolve(value);
+            },error=>{
+                return reject(error);
+            })
+        }
+    })
+}
+```
+
+#### 13.快速排序
+
+```js
+function partition(A,low,high){
+    var temp=A[low];
+    while(low<high){
+        while(low<high&&A[high]>=temp){
+            --high;
+        }
+        A[low]=A[high];
+        while(low<high&&A[low]<=temp){
+            ++low;
+        }
+        A[high]=A[low];
+    }
+    A[low]=temp;
+    return low;
+}
+function quicksort(A,low,high){
+    if(low<high){
+        var temp=partition(A,low,high);
+        quicksort(A,low,temp-1);
+        quicksort(A,temp+1,high);
+    }
+}
+
+var A=[1,2,2,45,12,7,8,19];
+quicksort(A,0,A.length-1);
+console.log(A);
+```
+
+#### 14.冒泡排序
+
+```js
+function bubbleSort(arr){
+    var len=arr.length;
+    for(var i=0;i<len-1;i++){
+        for(var j=0;j<len-1-i;j++){
+            if(arr[j]>arr[j+1]){
+                var temp=arr[j+1];
+                arr[j+1]=arr[j];
+                arr[j]=temp;
+            }
+        }
+    }
+    return arr;
+}
+```
+
