@@ -1,11 +1,11 @@
 # Site settings
-title: Audrey's Blog
-SEOTitle: Audrey's Blog
-header-img: img/bg-home.jpg
-email: 1355720906@qq.com
-description: "其实就是平平无奇的技术学习与分享"
+title: Audrey's Blog #博客标题
+SEOTitle: Audrey's Blog #浏览器上显示标题
+header-img: img/bg-home.jpg #主页图片地址
+email: 1355720906@qq.com #邮箱
+description: "其实就是平平无奇的技术学习与分享" 
 keyword: "Audrey, 博客, 个人网站, Web, JavaScript, 前端, 目标检测"
-url: "https://audreyh.top"              # your host, for absolute URL
+url: "https://audreyh.top"              # 博客地址，根据前面注册的域名填写
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
@@ -13,9 +13,9 @@ future: true
 
 # SNS settings
 RSS: false
-weibo_username:     Audrey_HYT
-zhihu_username:     Audrey
-github_username:    Audrey-Huang
+weibo_username:     Audrey_HYT #微博用户名
+zhihu_username:     Audrey  #知乎用户名
+github_username:    Audrey-Huang #github用户名
 # twitter_username:   huxpro
 #facebook_username:  huxpro
 #linkedin_username:  firstname-lastname-idxxxx
@@ -71,15 +71,15 @@ netease_comment: false
 # ba_track_id: [your track id]
 
 # Google Analytics
-ga_track_id: 'G-LC08XD5JQ9'            # Format: UA-xxxxxx-xx
-ga_domain: audreyh.top
+ga_track_id: 'G-LC08XD5JQ9'            # 谷歌流量监控id
+ga_domain: audreyh.top                 # 域名
 
 
 
 # Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "菜鸡的学习分享"
-sidebar-avatar: /img/avatar-hyt.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar: true                           
+sidebar-about-description: "菜鸡的学习分享"  #侧边栏描述
+sidebar-avatar: /img/avatar-hyt.jpg        #侧边栏头像显示
 
 
 

@@ -1,12 +1,13 @@
 ---
-layout:     post
-title:      "Classic Interview Questions"
-subtitle:   "前端面试经典题"
-date:       2021-04-10
-author:     "Audrey"
-header-img: "img/post-js-coding-2021.jpg"
-catalog: true
-tags:
+layout:     post   #使用布局
+title:      "Classic Interview Questions" #文章标题
+subtitle:   "前端面试经典题"  #文章副标题
+date:       2021-04-10    #文章时间
+author:     "Audrey"     #作者
+header-img: "img/post-js-coding-2021.jpg" #此篇文章背景图
+catalog: true  #是否显示分类
+# hidden: true  #true则不显示在主页，false或者不设置则显示在主页
+tags:   #标签
     - Web前端
     - JS
     - Coding
